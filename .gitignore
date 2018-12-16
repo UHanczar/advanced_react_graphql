@@ -1,3 +1,5 @@
 **/node_modules
 frontend/.next
+frontend/.vscode
+backend/.vscode
 backend/variables.env
