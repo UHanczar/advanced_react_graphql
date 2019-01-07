@@ -3,7 +3,6 @@ import Router from 'next/router';
 import {Mutation} from "react-apollo";
 import gql from 'graphql-tag';
 
-import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
 
@@ -59,7 +58,6 @@ class CreateItem extends Component {
 
     const file = await res.json();
 
-    console.log('FILE', file);
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
@@ -87,7 +85,7 @@ class CreateItem extends Component {
             <Error error={error}/>
 
             <fieldset disabled={loading} aria-busy={loading}>
-              <label htmlFor="title">
+              <label htmlFor="file">
                 Image
                 <input
                   type="file"
