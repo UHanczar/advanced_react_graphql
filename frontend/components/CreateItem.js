@@ -77,7 +77,10 @@ class CreateItem extends Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_ITEM_MUTATION}
+        variables={this.state}
+      >
         {(createItem, {error, loading}) => (
           <Form onSubmit={(event) => this.handleSubmit(event, createItem)}>
             <h2>Sell an item</h2>
