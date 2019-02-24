@@ -1,5 +1,6 @@
 import SignupUser from '../components/SignupUser';
 import SigninUser from '../components/SigninUser';
+import RequestReset from '../components/RequestReset';
 import styled from 'styled-components';
 
 const Columns = styled.div`
@@ -12,6 +13,7 @@ const Signup = props => (
   <Columns>
     <SignupUser />
     <SigninUser />
+    <RequestReset />
   </Columns>
 );
 
