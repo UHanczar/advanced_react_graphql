@@ -15,6 +15,7 @@ type User {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission]
+  card: [CardItem!]!
 }
 
 type Item {
@@ -25,4 +26,11 @@ type Item {
   largeImage: String
   price: Int!
    user: User!
+}
+
+type CardItem {
+  id: ID! @unique
+  quantity: Int! @default(value: 1)
+  item: Item
+  user: User!
 }

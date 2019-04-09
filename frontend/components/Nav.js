@@ -1,9 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
+import { Mutation } from "react-apollo";
+import CardCount from "./CardCount";
 
 import NavStyles from './styles/NavStyles';
 import User from './User';
 import Signout from './Signout';
+
+import { TOGGLE_CARD_MUTATION } from './Card';
 
 const Nav = () => (
 <User>
@@ -28,6 +32,17 @@ const Nav = () => (
           </Link>
 
           <Signout />
+
+          <Mutation mutation={TOGGLE_CARD_MUTATION}>
+            {(toggleCard) => (
+              <button onClick={toggleCard}>
+                My card
+                <CardCount
+                  count={user.card.reduce((tally, item) => tally + item.quantity, 0)}
+                />
+              </button>
+            )}
+          </Mutation>
         </>
       )}
 

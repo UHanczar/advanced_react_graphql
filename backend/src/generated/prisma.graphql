@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/uladzimir-hanchar/sick-fits/dev
-# timestamp: Sat Mar 02 2019 22:13:27 GMT+0300 (GMT+03:00)
+# timestamp: Sun Apr 07 2019 00:19:27 GMT+0300 (GMT+03:00)
+
+type AggregateCardItem {
+  count: Int!
+}
 
 type AggregateItem {
   count: Int!
@@ -12,6 +16,304 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type CardItem implements Node {
+  id: ID!
+  quantity: Int!
+  item: Item
+  user: User!
+}
+
+"""A connection to a list of items."""
+type CardItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CardItemEdge]!
+  aggregate: AggregateCardItem!
+}
+
+input CardItemCreateInput {
+  id: ID
+  quantity: Int
+  item: ItemCreateOneInput
+  user: UserCreateOneWithoutCardInput!
+}
+
+input CardItemCreateManyWithoutUserInput {
+  create: [CardItemCreateWithoutUserInput!]
+  connect: [CardItemWhereUniqueInput!]
+}
+
+input CardItemCreateWithoutUserInput {
+  id: ID
+  quantity: Int
+  item: ItemCreateOneInput
+}
+
+"""An edge in a connection."""
+type CardItemEdge {
+  """The item at the end of the edge."""
+  node: CardItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CardItemOrderByInput {
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CardItemPreviousValues {
+  id: ID!
+  quantity: Int!
+}
+
+input CardItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CardItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CardItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CardItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+}
+
+type CardItemSubscriptionPayload {
+  mutation: MutationType!
+  node: CardItem
+  updatedFields: [String!]
+  previousValues: CardItemPreviousValues
+}
+
+input CardItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CardItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CardItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CardItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CardItemWhereInput
+}
+
+input CardItemUpdateInput {
+  quantity: Int
+  item: ItemUpdateOneInput
+  user: UserUpdateOneRequiredWithoutCardInput
+}
+
+input CardItemUpdateManyDataInput {
+  quantity: Int
+}
+
+input CardItemUpdateManyMutationInput {
+  quantity: Int
+}
+
+input CardItemUpdateManyWithoutUserInput {
+  create: [CardItemCreateWithoutUserInput!]
+  connect: [CardItemWhereUniqueInput!]
+  set: [CardItemWhereUniqueInput!]
+  disconnect: [CardItemWhereUniqueInput!]
+  delete: [CardItemWhereUniqueInput!]
+  update: [CardItemUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [CardItemUpdateManyWithWhereNestedInput!]
+  deleteMany: [CardItemScalarWhereInput!]
+  upsert: [CardItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input CardItemUpdateManyWithWhereNestedInput {
+  where: CardItemScalarWhereInput!
+  data: CardItemUpdateManyDataInput!
+}
+
+input CardItemUpdateWithoutUserDataInput {
+  quantity: Int
+  item: ItemUpdateOneInput
+}
+
+input CardItemUpdateWithWhereUniqueWithoutUserInput {
+  where: CardItemWhereUniqueInput!
+  data: CardItemUpdateWithoutUserDataInput!
+}
+
+input CardItemUpsertWithWhereUniqueWithoutUserInput {
+  where: CardItemWhereUniqueInput!
+  update: CardItemUpdateWithoutUserDataInput!
+  create: CardItemCreateWithoutUserInput!
+}
+
+input CardItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CardItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CardItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CardItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+  item: ItemWhereInput
+  user: UserWhereInput
+}
+
+input CardItemWhereUniqueInput {
+  id: ID
 }
 
 type Item implements Node {
@@ -35,12 +337,18 @@ type ItemConnection {
 }
 
 input ItemCreateInput {
+  id: ID
   title: String!
   description: String!
   image: String
   largeImage: String
   price: Int!
   user: UserCreateOneInput!
+}
+
+input ItemCreateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -119,6 +427,15 @@ input ItemSubscriptionWhereInput {
   node: ItemWhereInput
 }
 
+input ItemUpdateDataInput {
+  title: String
+  description: String
+  image: String
+  largeImage: String
+  price: Int
+  user: UserUpdateOneRequiredInput
+}
+
 input ItemUpdateInput {
   title: String
   description: String
@@ -134,6 +451,20 @@ input ItemUpdateManyMutationInput {
   image: String
   largeImage: String
   price: Int
+}
+
+input ItemUpdateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ItemUpdateDataInput
+  upsert: ItemUpsertNestedInput
+}
+
+input ItemUpsertNestedInput {
+  update: ItemUpdateDataInput!
+  create: ItemCreateInput!
 }
 
 input ItemWhereInput {
@@ -381,16 +712,22 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createCardItem(data: CardItemCreateInput!): CardItem!
   createItem(data: ItemCreateInput!): Item!
   createUser(data: UserCreateInput!): User!
+  updateCardItem(data: CardItemUpdateInput!, where: CardItemWhereUniqueInput!): CardItem
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteCardItem(where: CardItemWhereUniqueInput!): CardItem
   deleteItem(where: ItemWhereUniqueInput!): Item
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertCardItem(where: CardItemWhereUniqueInput!, create: CardItemCreateInput!, update: CardItemUpdateInput!): CardItem!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyCardItems(data: CardItemUpdateManyMutationInput!, where: CardItemWhereInput): BatchPayload!
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyCardItems(where: CardItemWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -432,10 +769,13 @@ enum Permission {
 }
 
 type Query {
+  cardItems(where: CardItemWhereInput, orderBy: CardItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CardItem]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  cardItem(where: CardItemWhereUniqueInput!): CardItem
   item(where: ItemWhereUniqueInput!): Item
   user(where: UserWhereUniqueInput!): User
+  cardItemsConnection(where: CardItemWhereInput, orderBy: CardItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CardItemConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
@@ -447,6 +787,7 @@ type Query {
 }
 
 type Subscription {
+  cardItem(where: CardItemSubscriptionWhereInput): CardItemSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -459,6 +800,7 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission!]!
+  card(where: CardItemWhereInput, orderBy: CardItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CardItem!]
 }
 
 """A connection to a list of items."""
@@ -472,12 +814,14 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   email: String!
   password: String!
   resetToken: String
   resetTokenExpiry: String
   permissions: UserCreatepermissionsInput
+  card: CardItemCreateManyWithoutUserInput
 }
 
 input UserCreateOneInput {
@@ -485,8 +829,23 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutCardInput {
+  create: UserCreateWithoutCardInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreateWithoutCardInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserCreatepermissionsInput
 }
 
 """An edge in a connection."""
@@ -573,6 +932,7 @@ input UserUpdateDataInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserUpdatepermissionsInput
+  card: CardItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -582,6 +942,7 @@ input UserUpdateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserUpdatepermissionsInput
+  card: CardItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -600,13 +961,34 @@ input UserUpdateOneRequiredInput {
   upsert: UserUpsertNestedInput
 }
 
+input UserUpdateOneRequiredWithoutCardInput {
+  create: UserCreateWithoutCardInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutCardDataInput
+  upsert: UserUpsertWithoutCardInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpdateWithoutCardDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutCardInput {
+  update: UserUpdateWithoutCardDataInput!
+  create: UserCreateWithoutCardInput!
 }
 
 input UserWhereInput {
@@ -858,6 +1240,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   resetTokenExpiry_not_ends_with: String
+  card_every: CardItemWhereInput
+  card_some: CardItemWhereInput
+  card_none: CardItemWhereInput
 }
 
 input UserWhereUniqueInput {

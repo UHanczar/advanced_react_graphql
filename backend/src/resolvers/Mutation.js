@@ -190,6 +190,60 @@ const Mutations = {
         id: args.userId
       },
     }, info);
+  },
+
+  async addToCard(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    console.log('USERID', userId);
+
+    if (!userId) {
+      throw new Error('You must be sign in to add items to your card');
+    }
+
+    const [ existingCardItem ] = await ctx.db.query.cardItems({
+      where: {
+        user: { id: userId },
+        item: { id: args.id },
+      }
+    });
+
+    if (existingCardItem) {
+      return ctx.db.mutation.updateCardItem({
+        where: { id: existingCardItem.id },
+        data: { quantity: existingCardItem.quantity + 1},
+      }, info);
+    }
+
+    return ctx.db.mutation.createCardItem({
+      data: {
+        user: {
+          connect: { id: userId },
+        },
+        item: {
+          connect: { id: args.id }
+        }
+      }
+    }, info);
+  },
+
+  async removeFromCard(parent, args, ctx, info) {
+    const cardItem = await ctx.db.query.cardItem({
+      where: {
+        id: args.id,
+      }
+    }, `{ id, user { id } }`);
+
+    if (!cardItem) {
+      throw new Error('No CardItem found!');
+    }
+
+    if (cardItem.user.id !== ctx.request.userId) {
+      throw new Error('Cheeting, Haaa!');
+    }
+
+    return ctx.db.mutation.deleteCardItem({
+      where: { id: args.id }
+    }, info);
   }
 };
 

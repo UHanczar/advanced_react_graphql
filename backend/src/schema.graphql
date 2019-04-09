@@ -9,6 +9,7 @@ type User {
   name: String!
   email: String!
   permissions: [Permission]
+  card: [CardItem!]!
 }
 
 type Mutation {
@@ -40,6 +41,10 @@ type Mutation {
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
 
   updatePermissions(permissions: [Permission], userId: ID!): User
+
+  addToCard(id: ID!): CardItem
+
+  removeFromCard(id: ID!): CardItem
 }
 
 type Query {

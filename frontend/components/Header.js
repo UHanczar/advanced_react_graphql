@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import NProgress from 'nprogress';
 
 import Nav from './Nav';
+import Card from './Card';
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -75,7 +76,7 @@ const Header = () => (
       <p>Search</p>
     </div>
 
-    <div>Cart</div>
+    <Card />
   </StyledHeader>
 );
 
