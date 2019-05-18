@@ -11,6 +11,7 @@ import SickButton from './styles/SickButton';
 import CardItem from './CardItem';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import formatMoney from '../lib/formatMoney';
+import TakeMyMoney from './TakeMyMoney';
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -54,7 +55,11 @@ const Card = props => {
             <footer>
               <p>{formatMoney(calcTotalPrice(user.card))}</p>
 
-              <SickButton>Checkout</SickButton>
+              {user.card.length &&
+                <TakeMyMoney>
+                  <SickButton>Checkout</SickButton>
+                </TakeMyMoney>
+              }
             </footer>
           </CartStyles>
         );
