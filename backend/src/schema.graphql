@@ -46,7 +46,7 @@ type Mutation {
 
   removeFromCard(id: ID!): CardItem
 
-  createOrder(token: String!): Order!
+  createOrder(token: String!): Order
 }
 
 type Query {
@@ -59,4 +59,8 @@ type Query {
   user: User
 
   users: [User]!
+
+  order(id: ID!): Order!
+
+  orders(orderBy: OrderOrderByInput): [Order]!
 }

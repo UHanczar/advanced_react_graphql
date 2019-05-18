@@ -29,7 +29,7 @@ const CREATE_ORDER_MUTATION = gql`
 
 class TakeMyMoney extends Component {
   onTokenReceived = async (res, createOrder) => {
-    console.log('RES', res);
+    NProgress.start();
     const order = await createOrder({
       variables: {
         token: res.id
@@ -37,7 +37,12 @@ class TakeMyMoney extends Component {
     })
       .catch(error => alert(error.message));
 
-    console.log('ORDER', order);
+    Router.push({
+      pathname: '/order',
+      query: {
+        id: order.data.createOrder.id,
+      }
+    })
   };
 
   render() {
